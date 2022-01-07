@@ -9,3 +9,6 @@ As of right now, the only technologies in use are:
   - Node.js
   - Prisma
   - Express.js
+
+# Documentation
+Coming soon
