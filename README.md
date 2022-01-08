@@ -11,9 +11,22 @@ As of right now, the only technologies in use are:
   - Express.js
   - SQLite (Planning on transitioning to PostgreSQL)
 
-# General Reference
-----------
-### File Object
+# Table of contents <a name="toc"></a>
+
+- [TOC](#toc)
+- [General Reference](#ref)
+  - [`File` object](#file-obj)
+  - [Errors](#errors)
+- [Endpoints](#endpoints)
+  - [POST `/new_file`](#new_file)
+  - [GET `/get_file`](#get_file)
+  - [GET `/get_files`](#get_files)
+  - [DELETE `/delete_file`](#delete_file)
+  - [PATCH `/update_file`](#update_file)
+- [Examples](#examples)
+
+# General Reference <a name="ref"></a>
+### File Object <a name="file-obj"></a>
 A `File` object contains the following properties:
 - `fileID: String` - The unique indentifier associated with this file.
 - `filename: String` - The name of this file.
@@ -28,7 +41,7 @@ Example `File` object:
 }
 ```
 
-### Errors
+### Errors <a name="errors"></a>
 All **4XX** error codes will always return a JSON alongside their error codes.
 This is the syntax for one:
 ```json
@@ -41,10 +54,8 @@ that gives more information on what exactly went wrong.
 The response code will also closely reflect the error.
 ----------
 
-# Endpoints
-
-----------
-## POST `/new_file`
+# Endpoints <a name="endpoints"></a>
+## POST `/new_file` <a name="new_file"></a>
 
 Creates a new file associated with a user.
 
@@ -58,7 +69,7 @@ Creates a new file associated with a user.
 - `400` - The ID was not a valid ID. An ID consists of only numbers.
 ----------
 
-## GET `/get_files`
+## GET `/get_files` <a name="get_files"></a>
 Gets all files associated with the given Discord user ID.
 
 ### URL parameters
@@ -73,7 +84,7 @@ Refer to the "General Reference" section for the properties of a `File` object.
 - `400` - The ID was not a valid ID. An ID consists of only numbers.
 - `404` - The ID was valid but was not found in the database.
 ----------
-## GET `/get_file`
+## GET `/get_file` <a name="get_file"></a>
 Gets a single file with its ID
 
 ## URL parameters
@@ -88,7 +99,7 @@ Refer to the "General Reference" section for the properties of a `File` object.
 - `400` - The ID was not a valid file ID.
 - `404` - The ID was a valid file ID but a corresponding file was not found in the database.
 ----------
-## DELETE `/delete_files`
+## DELETE `/delete_files` <a name="delete_files"></a>
 Deletes a file given the file ID
 
 ### URL parameters
@@ -99,7 +110,7 @@ Deletes a file given the file ID
 - `400` - The ID was not a valid ID.
 - `404` - The ID was valid but the associated file was not found in the database
 ----------
-## PATCH `/update_file`
+## PATCH `/update_file` <a name="update_file"></a>
 Update a file given the file ID, new file name, and new attachment URL
 
 ### Body
@@ -111,4 +122,38 @@ Update a file given the file ID, new file name, and new attachment URL
 - `200` - All information was valid and the file was successfully validated
 - `400` - Missing a certain piece of information. The returned error will describe what went wrong.
 - `404` - The provided file ID was valid but was not found in the database.
-----------
+
+# Examples <a name="examples"></a>
+Following are a few examples on how to use the different endpoints.
+The actual IP of the API server or the domain should be substituted for `server-ip`.
+
+```
+POST https://server-ip/new_file/
+
+{
+  "userID": "432643355634171905",
+  "filename": "index.js",
+  "url": "https://cdn.discordapp.com/attachments/844432226745057280/929190129397022750/index.js"
+}
+```
+
+```
+GET https://server-ip/get_file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
+```
+Note that for most libraries that aid in making HTTP requests, there will
+most likely be a way to pass in a JSON-like object for the querystring params
+rather than having to format it manually.
+
+```
+DELETE https://server-ip/delete_file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
+```
+
+```
+PATCH https://server-ip/update_file
+
+{
+  "fileID": "579d92b9-0c2a-4337-a269-f6053cf545a6",
+  "filename": "new_index.js",
+  "url": "https://cdn.discordapp.com/attachments/844432226745057280/929190129397022750/new_index.js"
+}
+```
