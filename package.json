@@ -1,0 +1,26 @@
+{
+  "name": "jarvide-api",
+  "version": "1.0.0",
+  "description": "API for the Jarvide Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robin5605/jarvide-api.git"
+  },
+  "author": "Robin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Robin5605/jarvide-api/issues"
+  },
+  "homepage": "https://github.com/Robin5605/jarvide-api#readme",
+  "devDependencies": {
+    "express": "^4.17.2",
+    "prisma": "^3.7.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.7.0"
+  }
+}
