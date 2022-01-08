@@ -12,7 +12,6 @@ As of right now, the only technologies in use are:
   - SQLite (Planning on transitioning to PostgreSQL)
 
 # General Reference
-----------
 ### File Object
 A `File` object contains the following properties:
 - `fileID: String` - The unique indentifier associated with this file.
@@ -43,7 +42,6 @@ The response code will also closely reflect the error.
 
 # Endpoints
 
-----------
 ## POST `/new_file`
 
 Creates a new file associated with a user.
