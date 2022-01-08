@@ -5,6 +5,11 @@ const port = 3030;
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const auth = require('./auth.js');
+
+app.use(express.json());
+app.use(auth)
+
 function fileToJSON(file) {
     return ({
         fileID: file.fileID,
@@ -12,8 +17,6 @@ function fileToJSON(file) {
         url: file.url
     });
 }
-
-app.use(express.json());
 
 app.post('/new_file', async (req, res) => {
     

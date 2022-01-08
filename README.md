@@ -17,6 +17,7 @@ As of right now, the only technologies in use are:
 - [General Reference](#ref)
   - [`File` object](#file-obj)
   - [Errors](#errors)
+  - [Authentication](#auth)
 - [Endpoints](#endpoints)
   - [POST `/new_file`](#new_file)
   - [GET `/get_file`](#get_file)
@@ -53,6 +54,20 @@ Where `MESSAGE` is a short but descriptive string
 that gives more information on what exactly went wrong.
 The response code will also closely reflect the error.
 
+### Authentication <a name="auth"></a>
+Since the API is currently in an invite-only private stage, you will need an API key to access **any** endpoint. I have given out the API key to a select few. Following is intructions on how to use it.
+
+When sending **any** request to **any** endpoint, you **will** need the API key in the **header**. This is important because it will not be accepted anywhere else (URL params, POST request body, etc...) Here is an example on how one might successfully send an authenticated request to the server:
+
+```
+GET https://server-ip/get_file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
+
+HEADERS 
+{
+  "Api-Key": "YOUR API KEY HERE"
+}
+```
+
 # Endpoints <a name="endpoints"></a>
 ## POST `/new_file` <a name="new_file"></a>
 
@@ -74,9 +89,9 @@ Gets all files associated with the given Discord user ID.
 ### URL parameters
 - `userID: Int` - The Discord ID of the user whose files to return.
 
-### Return value
-A **list** of **File** objects
-Refer to the "General Reference" section for the properties of a `File` object.
+### Return value: `Array<File>`
+
+Refer to the [File](#file-obj) object section under the [General Refernce](#ref) heading.
 
 ### Status codes
 - `200` - The ID was valid and was present in the database. The response body contains the files.
@@ -89,9 +104,8 @@ Gets a single file with its ID
 ## URL parameters
 `fileID: String` - The ID of the file to retrieve.
 
-## Return value
-A single **File** object.
-Refer to the "General Reference" section for the properties of a `File` object.
+## Return value: `File`
+Refer to the [File](#file-obj) object section under the [General Refernce](#ref) heading.
 
 ## Status codes
 - `200` - The ID was valid and the corresponding file was successfully returned
@@ -125,6 +139,8 @@ Update a file given the file ID, new file name, and new attachment URL
 # Examples <a name="examples"></a>
 Following are a few examples on how to use the different endpoints.
 The actual IP of the API server or the domain should be substituted for `server-ip`.
+
+Please also keep in mind the authentication has been left out these examples for the sake of brevity and that they are all identical. If you want to know how to authenticate correctly, please refer to the [Authentication](#auth) section
 
 ```
 POST https://server-ip/new_file/
