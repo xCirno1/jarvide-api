@@ -35,7 +35,7 @@ This is the syntax for one:
   "ERROR": "MESSAGE"
 }
 ```
-Where `MESSAGE` is a short but descriptive string 
+##### Where `MESSAGE` is a short but descriptive string 
 that gives more information on what exactly went wrong.
 The response code will also closely reflect the error.
 ----------
