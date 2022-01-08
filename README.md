@@ -13,7 +13,7 @@ As of right now, the only technologies in use are:
 
 # Table of contents <a name="toc"></a>
 
-- [TOC](#toc)
+- [Table of contents](#toc)
 - [General Reference](#ref)
   - [`File` object](#file-obj)
   - [Errors](#errors)
