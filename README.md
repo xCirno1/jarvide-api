@@ -19,11 +19,11 @@ As of right now, the only technologies in use are:
   - [Errors](#errors)
   - [Authentication](#auth)
 - [Endpoints](#endpoints)
-  - [POST `/new_file`](#new_file)
-  - [GET `/get_file`](#get_file)
-  - [GET `/get_files`](#get_files)
-  - [DELETE `/delete_file`](#delete_file)
-  - [PATCH `/update_file`](#update_file)
+  - [POST `/file`](#new_file)
+  - [GET `/file`](#get_file)
+  - [GET `/files`](#get_files)
+  - [DELETE `/file`](#delete_file)
+  - [PATCH `/file`](#update_file)
 - [Examples](#examples)
 
 # General Reference <a name="ref"></a>
@@ -69,7 +69,7 @@ HEADERS
 ```
 
 # Endpoints <a name="endpoints"></a>
-## POST `/new_file` <a name="new_file"></a>
+## POST `/file` <a name="new_file"></a>
 
 Creates a new file associated with a user.
 
@@ -83,7 +83,7 @@ Creates a new file associated with a user.
 - `400` - The ID was not a valid ID. An ID consists of only numbers.
 ----------
 
-## GET `/get_files` <a name="get_files"></a>
+## GET `/files` <a name="get_files"></a>
 Gets all files associated with the given Discord user ID.
 
 ### URL parameters
@@ -98,7 +98,7 @@ Refer to the [File](#file-obj) object section under the [General Refernce](#ref)
 - `400` - The ID was not a valid ID. An ID consists of only numbers.
 - `404` - The ID was valid but was not found in the database.
 ----------
-## GET `/get_file` <a name="get_file"></a>
+## GET `/file` <a name="get_file"></a>
 Gets a single file with its ID
 
 ## URL parameters
@@ -112,7 +112,7 @@ Refer to the [File](#file-obj) object section under the [General Refernce](#ref)
 - `400` - The ID was not a valid file ID.
 - `404` - The ID was a valid file ID but a corresponding file was not found in the database.
 ----------
-## DELETE `/delete_files` <a name="delete_files"></a>
+## DELETE `/file` <a name="delete_file"></a>
 Deletes a file given the file ID
 
 ### URL parameters
@@ -123,7 +123,7 @@ Deletes a file given the file ID
 - `400` - The ID was not a valid ID.
 - `404` - The ID was valid but the associated file was not found in the database
 ----------
-## PATCH `/update_file` <a name="update_file"></a>
+## PATCH `/file` <a name="update_file"></a>
 Update a file given the file ID, new file name, and new attachment URL
 
 ### Body
@@ -143,7 +143,7 @@ The actual IP of the API server or the domain should be substituted for `server-
 Please also keep in mind the authentication has been left out these examples for the sake of brevity and that they are all identical. If you want to know how to authenticate correctly, please refer to the [Authentication](#auth) section
 
 ```
-POST https://server-ip/new_file/
+POST https://server-ip/file/
 
 {
   "userID": "432643355634171905",
@@ -153,18 +153,18 @@ POST https://server-ip/new_file/
 ```
 
 ```
-GET https://server-ip/get_file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
+GET https://server-ip/file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
 ```
 Note that for most libraries that aid in making HTTP requests, there will
 most likely be a way to pass in a JSON-like object for the querystring params
 rather than having to format it manually.
 
 ```
-DELETE https://server-ip/delete_file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
+DELETE https://server-ip/file?fileID=579d92b9-0c2a-4337-a269-f6053cf545a6
 ```
 
 ```
-PATCH https://server-ip/update_file
+PATCH https://server-ip/file
 
 {
   "fileID": "579d92b9-0c2a-4337-a269-f6053cf545a6",

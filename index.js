@@ -18,7 +18,7 @@ function fileToJSON(file) {
     });
 }
 
-app.post('/new_file', async (req, res) => {
+app.post('/file', async (req, res) => {
     
     let { userID, filename, url} = req.body;
 
@@ -67,7 +67,7 @@ app.post('/new_file', async (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('/get_files', async (req, res) => {
+app.get('/files', async (req, res) => {
     let { userID } = req.query;
 
     if (!userID) {
@@ -108,7 +108,7 @@ app.get('/get_files', async (req, res) => {
     return;
 });
 
-app.get('/get_file', async (req, res) => {
+app.get('/file', async (req, res) => {
     let { fileID } = req.query;
 
     if(!fileID) {
@@ -137,7 +137,7 @@ app.get('/get_file', async (req, res) => {
     
 });
 
-app.delete('/delete_file', async (req, res) => {
+app.delete('/file', async (req, res) => {
     let { fileID } = req.query;
 
     if (!fileID) {
@@ -163,7 +163,7 @@ app.delete('/delete_file', async (req, res) => {
     return;
 });
 
-app.patch('/update_file', async (req, res) => {
+app.patch('/file', async (req, res) => {
     let { fileID, filename, url} = req.body;
 
     if (!fileID) {
