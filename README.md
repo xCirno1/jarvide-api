@@ -15,7 +15,9 @@ As of right now, the only technologies in use are:
 
 - [Table of Contents](#toc)
 - [General Reference](#ref)
-  - [`File` object](#file-obj)
+  - [Objects](#objs)
+    - [`File` object](#file-obj)
+    - [`Warn` object](#warn-obj)
   - [Errors](#errors)
   - [Authentication](#auth)
 - [Endpoints](#endpoints)
@@ -32,7 +34,9 @@ As of right now, the only technologies in use are:
 - [Examples](#examples)
 
 # General Reference <a name="ref"></a>
-### File Object <a name="file-obj"></a>
+
+## Objects <a name="objs"></a>
+### `File` Object <a name="file-obj"></a>
 A `File` object contains the following properties:
 - `fileID: String` - The unique indentifier associated with this file.
 - `filename: String` - The name of this file.
@@ -46,6 +50,13 @@ Example `File` object:
   "url": "https://www.discord.com/attachments/123456789/123456789"
 }
 ```
+
+### `Warn` object <a name="warn-obj"></a>
+A `Warn` object contains the following properties:
+- `warnID: String`: The unique identifier associated with this warn
+- `userID: Int`: The user who was warned
+- `modID: Int`: The moderator who issued this warning
+- `reason: String`: The reason for this warning
 
 ### Errors <a name="errors"></a>
 All **4XX** error codes will always return a JSON alongside their error codes.
