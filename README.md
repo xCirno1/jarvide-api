@@ -189,6 +189,7 @@ Removes a warn entry from the database
 ### Status codes
 - `200` - All information was valid and the entry was successfully removed from the database.
 - `400` - Missing a certain piece of information. The returned error will describe what went wrong.
+- `404` - The provided warnID was not found in the database and nothing was deleted
 ----------
 # Examples <a name="examples"></a>
 Following are a few examples on how to use the different endpoints.
