@@ -161,6 +161,9 @@ Get all warns for a given Discord user's ID.
 ### URL Parameters
 - `userID: Int` - The ID of the user whose warnings should be returned
 
+### Return value: `Array<Warn>`
+Refer to the [Warn](#warn-obj) object section under the [General Refernce](#ref) heading.
+
 ### Status codes
 - `200` - All information was valid and the requested information was returned
 - `400` Missing a certain piece of information. The returned error will describe what went wrong.
