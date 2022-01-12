@@ -349,7 +349,7 @@ app.delete('/warns', async (req, res) => {
 });
 
 app.get('/github', async (req, res) => {
-    let {userID} = req.query;
+    let {userID, key} = req.query;
 
     if(!userID) {
         res.status(404).send({
@@ -359,6 +359,12 @@ app.get('/github', async (req, res) => {
         return;
     }
 
+    if(!key) {
+        res.status(404).send({
+            "ERROR": "Missing key in URL parameters."
+        });
+        return;
+    }
     const auth = await prisma.github.findUnique({
         where: {userID: userID}
     });
@@ -370,9 +376,11 @@ app.get('/github', async (req, res) => {
 
         return;
     }
-
+    const crypto = require("crypto-js");
+    const aes = require("crypto-js/aes");
+    const originalToken = aes.decrypt(auth, key).toString(crypto.enc.Utf8);
     res.status(200).send(
-        auth
+        originalToken
     )
     
 });
