@@ -26,7 +26,9 @@ As of right now, the only technologies in use are:
     - [DELETE `/file`](#delete_file)
     - [PATCH `/file`](#update_file)
   - [Warning Endpoints](#warning-endpoints)
-    - 
+    - [GET `/warns`](#get-warns)
+    - [POST `/warns`](#post-warns)
+    - [DELETE `/warns`](#delete-warns)
 - [Examples](#examples)
 
 # General Reference <a name="ref"></a>
@@ -142,7 +144,7 @@ Update a file given the file ID, new file name, and new attachment URL
 
 # Warning Endpoints <a name="warning-endpoints"></a>
 
-## GET `/warns`
+## GET `/warns` <a name="get-warns"></a>
 Get all warns for a given Discord user's ID.
 
 ### URL Parameters
@@ -152,7 +154,7 @@ Get all warns for a given Discord user's ID.
 - `200` - All information was valid and the requested information was returned
 - `400` Missing a certain piece of information. The returned error will describe what went wrong.
 ----------
-## POST `/warns`
+## POST `/warns` <a name="post-warns"></a>
 Creates a new warning for the user in the database.
 
 ### Body
@@ -164,7 +166,7 @@ Creates a new warning for the user in the database.
 - `200` - All information was valid and an entry was successfully created in the database. 
 - `400` - Missing a certain piece of information. The returned error will describe what went wrong.
 ----------
-## DELETE `/warns`
+## DELETE `/warns` <a name="delete-warns"></a>
 Removes a warn entry from the database
 
 ### URL Parameters
