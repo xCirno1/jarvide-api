@@ -348,6 +348,74 @@ app.delete('/warns', async (req, res) => {
 
 });
 
+app.get('/github', async (req, res) => {
+    let {userID} = req.query;
+
+    if(!userID) {
+        res.status(404).send({
+            "ERROR": "Missing userID in URL parameters."
+        });
+
+        return;
+    }
+
+    const auth = await prisma.github.findUnique({
+        where: {userID: userID}
+    });
+
+    if(!auth) {
+        res.status(404).send({
+            "ERROR": "Provided userID was not found."
+        });
+
+        return;
+    }
+
+    res.status(200).send(
+        auth
+    )
+    
+});
+
+app.post('/github', async (req, res) => {
+    let {userID, token} = req.body;
+
+    if (!userID) {
+        res.status(404).send({
+            "ERROR": "Missing userID in body."
+        });
+
+        return;
+    } 
+    
+    if (!token) {
+        res.status(404).send({
+            "ERROR": "Missing token in body."
+        });
+
+        return;
+    } 
+    
+    userID = parseInt(userID);
+
+    if(isNaN(userID)) {
+        res.status(400).send({
+            "ERROR": "userID must be an INTEGER."
+        });
+
+        return;
+    }
+
+    await prisma.github.create({
+        data: {
+            userID: userID,
+            token: token
+        }
+    });
+
+    res.sendStatus(200);
+});
+
 app.listen(port, () => {
     console.log(`Listening at https://localhost:${port}`);
 });
