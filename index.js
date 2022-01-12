@@ -18,8 +18,16 @@ function fileToJSON(file) {
     });
 }
 
+function warnToJSON(warn) {
+    return({
+        warnID: warn.warnID,
+        userID: warn.userID,
+        modID: warn.modID,
+        reason: warn.reason,
+    });
+}
+
 app.post('/file', async (req, res) => {
-    
     let { userID, filename, url} = req.body;
 
     if (!userID) {
@@ -89,15 +97,12 @@ app.get('/files', async (req, res) => {
 
     const files = await prisma.files.findMany({
         where: {
-            userID: parseInt(userID)
+            userID: userID
         }
     })
 
     if(files.length === 0) {
-        res.status(404).send({
-            "ERROR": "Provided userID was not found."
-        });
-
+        res.status(200).send({});
         return;
     }
 
@@ -220,6 +225,127 @@ app.patch('/file', async (req, res) => {
     }
 
     res.sendStatus(200);
+});
+
+
+
+app.get('/warns', async (req, res) => {
+    let { userID } = req.query;
+
+    if (!userID) {
+        res.status(400).send({
+            "ERROR": "Missing userID in URL parameters."
+        });
+
+        return;
+    } 
+
+    userID = parseInt(userID)
+    if(isNaN(userID)) {
+        res.status(400).send({
+            "ERROR": "userID must be an INTEGER."
+        });
+
+        return;
+    }
+
+    const warns = await prisma.warns.findMany({
+        where: {userID: userID}
+    });
+
+    if(warns.length === 0) {
+        res.status(200).send({});
+        return;
+    }
+
+    res.status(200).send(
+        warns.map(warn => warnToJSON(warn))
+    );
+
+    return;
+
+});
+
+app.post('/warns', async (req, res) => {
+    let { userID, modID, reason } = req.body;
+
+    if(!userID) {
+        res.status(400).send({
+            "ERROR": "Missing userID in body"
+        });
+        return
+    }
+
+    if(!modID) {
+        res.status(400).send({
+            "ERROR": "Missing modID in body"
+        });
+        return
+    }
+
+    if(!reason) {
+        res.status(400).send({
+            "ERROR": "Missing reason in body"
+        });
+        return
+    }
+
+    userID = parseInt(userID);
+    if(isNaN(userID)) {
+        res.status(400).send({
+            "ERROR": "userID must be an INTEGER."
+        });
+
+        return;
+    }
+
+    modID = parseInt(modID);
+    if(isNaN(modID)) {
+        res.status(400).send({
+            "ERROR": "userID must be an INTEGER."
+        });
+
+        return;
+    }
+
+    await prisma.warns.create({
+        data: {
+            userID: userID,
+            modID: modID,
+            reason: reason,
+        }
+    });
+
+    res.sendStatus(200);
+
+    return;
+
+});
+
+app.delete('/warns', async (req, res) => {
+    let { warnID } = req.query;
+    if(!warnID) {
+        res.status(400).send({
+            "ERROR": "Missing warnID in URL parameters."
+        });
+
+        return;
+    }
+
+    try {
+        await prisma.warns.delete({
+            where: {warnID: warnID}
+        });
+
+        res.sendStatus(200);
+    } catch {
+        res.status(404).send({
+            "ERROR": "The warn could not be deleted because it does not exist."
+        });
+    }
+
+    return;
+
 });
 
 app.listen(port, () => {

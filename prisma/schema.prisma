@@ -16,3 +16,10 @@ model Files {
   filename String
   url String
 }
+
+model Warns {
+  warnID String @id @default(uuid())
+  userID Int
+  modID Int
+  reason String
+}

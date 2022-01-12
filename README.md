@@ -13,17 +13,20 @@ As of right now, the only technologies in use are:
 
 # Table of contents <a name="toc"></a>
 
-- [Table of contents](#toc)
+- [Table of Contents](#toc)
 - [General Reference](#ref)
   - [`File` object](#file-obj)
   - [Errors](#errors)
   - [Authentication](#auth)
 - [Endpoints](#endpoints)
-  - [POST `/file`](#new_file)
-  - [GET `/file`](#get_file)
-  - [GET `/files`](#get_files)
-  - [DELETE `/file`](#delete_file)
-  - [PATCH `/file`](#update_file)
+  - [File Endpoints](#file-endpoints)
+    - [POST `/file`](#new_file)
+    - [GET `/file`](#get_file)
+    - [GET `/files`](#get_files)
+    - [DELETE `/file`](#delete_file)
+    - [PATCH `/file`](#update_file)
+  - [Warning Endpoints](#warning-endpoints)
+    - 
 - [Examples](#examples)
 
 # General Reference <a name="ref"></a>
@@ -69,6 +72,7 @@ HEADERS
 ```
 
 # Endpoints <a name="endpoints"></a>
+# File endpoints <a name="file-endpoints"></a>
 ## POST `/file` <a name="new_file"></a>
 
 Creates a new file associated with a user.
@@ -129,13 +133,47 @@ Update a file given the file ID, new file name, and new attachment URL
 ### Body
 - `fileID: String` - The ID of the file which you wish to update.
 - `filename: String` - The new name of this file.
-- `url: String` - The new Discord attachment URL that points to this file.
+- `url: String`localhost:3030/warns?userID=123 - The new Discord attachment URL that points to this file.
 
 ### Status codes
 - `200` - All information was valid and the file was successfully validated
 - `400` - Missing a certain piece of information. The returned error will describe what went wrong.
 - `404` - The provided file ID was valid but was not found in the database.
 
+# Warning Endpoints <a name="warning-endpoints"></a>
+
+## GET `/warns`
+Get all warns for a given Discord user's ID.
+
+### URL Parameters
+- `userID: Int` - The ID of the user whose warnings should be returned
+
+### Status codes
+- `200` - All information was valid and the requested information was returned
+- `400` Missing a certain piece of information. The returned error will describe what went wrong.
+----------
+## POST `/warns`
+Creates a new warning for the user in the database.
+
+### Body
+- `userID: Int` - The Discord ID of the user who this warn is for
+- `modID: Int` - The Discord ID of the moderator who issued this warn
+- `reason: String` - The reason for this warn
+
+### Status codes
+- `200` - All information was valid and an entry was successfully created in the database. 
+- `400` - Missing a certain piece of information. The returned error will describe what went wrong.
+----------
+## DELETE `/warns`
+Removes a warn entry from the database
+
+### URL Parameters
+- `warnID: String` - The ID of the warn which to delete
+
+### Status codes
+- `200` - All information was valid and the entry was successfully removed from the database.
+- `400` - Missing a certain piece of information. The returned error will describe what went wrong.
+----------
 # Examples <a name="examples"></a>
 Following are a few examples on how to use the different endpoints.
 The actual IP of the API server or the domain should be substituted for `server-ip`.
