@@ -7,6 +7,9 @@ const prisma = new PrismaClient();
 
 const auth = require('./auth.js');
 
+const crypto = require("crypto-js");
+const aes = require("crypto-js/aes");
+
 app.use(express.json());
 app.use(auth)
 
@@ -376,8 +379,7 @@ app.get('/github', async (req, res) => {
 
         return;
     }
-    const crypto = require("crypto-js");
-    const aes = require("crypto-js/aes");
+
     const originalToken = aes.decrypt(auth, key).toString(crypto.enc.Utf8);
     res.status(200).send(
         originalToken
